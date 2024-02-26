@@ -7,6 +7,7 @@ const std = @import("std");
 // Works by looping through each character, comparing it to each subsequent character.
 // If a duplicate is found, returns false.
 // If nothing was found, it defaults to returning true.
+// Returns bool
 pub fn noDuplicates_ByLoops(input: []const u8) bool {
     // don't bother if we don't have at least two characters
     if (input.len < 2) {
@@ -28,6 +29,7 @@ pub fn noDuplicates_ByLoops(input: []const u8) bool {
 }
 
 // Works by sorting the characters and then checking there are no repeats.
+// Returns error or bool
 pub fn noDuplicates_BySorting(allocator: std.mem.Allocator, input: []const u8) !bool {
     // don't bother if we don't have at least two characters
     if (input.len < 2) {
@@ -47,6 +49,31 @@ pub fn noDuplicates_BySorting(allocator: std.mem.Allocator, input: []const u8) !
     while (pos < buffer.len-1) : (pos += 1) {
         if (buffer[pos] == buffer[pos + 1]) {
             return false;
+        }
+    }
+
+    return true;
+}
+
+// Works by creating a hashmap of the characters to ensure there are no repeats.
+// Returns error or bool
+pub fn noDuplicates_ByHashMap(allocator: std.mem.Allocator, input: []const u8) !bool {
+    if (input.len < 2) {
+        return true;
+    }
+
+    var map = std.AutoHashMap(u8, bool).init(allocator);
+    defer map.deinit();
+
+    for (input) |c| {
+        const result = map.get(c);
+        const found = result orelse false;
+
+        if (found) {
+            return false;
+        } else {
+            // not found, add it
+            try map.put(c, true);
         }
     }
 
@@ -101,3 +128,22 @@ test "(BySorting) no duplicates - has a duplicate at the end" {
 }
 
 // -------------------------------------------------------------------------------------- ByHashMap
+test "(ByHashMap) no duplicates - empty string" {
+    const result = try noDuplicates_ByHashMap(test_allocator, "");
+    try expect(result);
+}
+
+test "(ByHashMap) no duplicates - proper string" {
+    const result = try noDuplicates_ByHashMap(test_allocator, "abcde");
+    try expect(result);
+}
+
+test "(ByHashMap) no duplicates - has a duplicate" {
+    const result = try noDuplicates_ByHashMap(test_allocator, "aa");
+    try expect(!result);
+}
+
+test "(ByHashMap) no duplicates - has a duplicate at the end" {
+    const result = try noDuplicates_ByHashMap(test_allocator, "abcdefghABCDEFGa");
+    try expect(!result);
+}
