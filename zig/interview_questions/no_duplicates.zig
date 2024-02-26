@@ -8,7 +8,12 @@ const std = @import("std");
 // If a duplicate is found, returns false.
 // If nothing was found, it defaults to returning true.
 pub fn noDuplicates_ByLoops(input: []const u8) bool {
-    var pos : usize = 0;
+    // don't bother if we don't have at least two characters
+    if (input.len < 2) {
+        return true;
+    }
+
+    var pos: usize = 0;
 
     while (pos < input.len) : (pos += 1) {
         var checking = pos + 1;
@@ -22,30 +27,77 @@ pub fn noDuplicates_ByLoops(input: []const u8) bool {
     return true;
 }
 
-// ________________________________________________________________________________________________ 
-// ========================================================================================== TESTS 
+// Works by sorting the characters and then checking there are no repeats.
+pub fn noDuplicates_BySorting(allocator: std.mem.Allocator, input: []const u8) !bool {
+    // don't bother if we don't have at least two characters
+    if (input.len < 2) {
+        return true;
+    }
+
+    // create a buffer from the input that we can sort
+    const buffer = try allocator.alloc(u8, input.len);
+    defer allocator.free(buffer); // remember to free it!
+
+    // now sort the characters 
+    std.mem.copyForwards(u8, buffer, input);
+    std.mem.sort(u8, buffer, {}, comptime std.sort.asc(u8));
+
+    var pos: usize = 0;
+
+    while (pos < buffer.len-1) : (pos += 1) {
+        if (buffer[pos] == buffer[pos + 1]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// ________________________________________________________________________________________________
+// ========================================================================================== TESTS
 const expect = std.testing.expect;
+const test_allocator = std.testing.allocator;
 
-test "no duplicates - empty string" {
+// ---------------------------------------------------------------------------------------- ByLoops
+test "(ByLoops) no duplicates - empty string" {
     const result = noDuplicates_ByLoops("");
-
     try expect(result);
 }
 
-test "no duplicates - proper string" {
+test "(ByLoops) no duplicates - proper string" {
     const result = noDuplicates_ByLoops("abcde");
-
     try expect(result);
 }
 
-test "no duplicates - has a duplicate" {
+test "(ByLoops) no duplicates - has a duplicate" {
     const result = noDuplicates_ByLoops("aa");
-
     try expect(!result);
 }
 
-test "no duplicates - has a duplicate at the end" {
+test "(ByLoops) no duplicates - has a duplicate at the end" {
     const result = noDuplicates_ByLoops("abcdefghABCDEFGa");
-
     try expect(!result);
 }
+
+// -------------------------------------------------------------------------------------- BySorting
+test "(BySorting) no duplicates - empty string" {
+    const result = try noDuplicates_BySorting(test_allocator, "");
+    try expect(result);
+}
+
+test "(BySorting) no duplicates - proper string" {
+    const result = try noDuplicates_BySorting(test_allocator, "abcde");
+    try expect(result);
+}
+
+test "(BySorting) no duplicates - has a duplicate" {
+    const result = try noDuplicates_BySorting(test_allocator, "aa");
+    try expect(!result);
+}
+
+test "(BySorting) no duplicates - has a duplicate at the end" {
+    const result = try noDuplicates_BySorting(test_allocator, "abcdefghABCDEFGa");
+    try expect(!result);
+}
+
+// -------------------------------------------------------------------------------------- ByHashMap
