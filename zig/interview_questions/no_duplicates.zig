@@ -4,6 +4,7 @@ const std = @import("std");
 // Characters 0..9, a..z, A..Z are expected, anything else will break the algorithm for this
 // exercise.
 
+// ------------------------------------------------------------------------------------------------
 // Works by looping through each character, comparing it to each subsequent character.
 // If a duplicate is found, returns false.
 // If nothing was found, it defaults to returning true.
@@ -28,6 +29,7 @@ pub fn noDuplicates_ByLoops(input: []const u8) bool {
     return true;
 }
 
+// ------------------------------------------------------------------------------------------------
 // Works by sorting the characters and then checking there are no repeats.
 // Returns error or bool
 pub fn noDuplicates_BySorting(allocator: std.mem.Allocator, input: []const u8) !bool {
@@ -55,6 +57,7 @@ pub fn noDuplicates_BySorting(allocator: std.mem.Allocator, input: []const u8) !
     return true;
 }
 
+// ------------------------------------------------------------------------------------------------
 // Works by creating a hashmap of the characters to ensure there are no repeats.
 // Returns error or bool
 pub fn noDuplicates_ByHashMap(allocator: std.mem.Allocator, input: []const u8) !bool {
