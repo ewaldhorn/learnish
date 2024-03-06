@@ -30,6 +30,9 @@ describe("basic", () => {
         expect(isAnagram("tall", "salt")).toBe(false);
     });
 
+    test("test ceder/seeder - false", () => {
+        expect(isAnagram("ceder", "seeder")).toBe(false);
+    });
 });
 
 describe("by count", () => {
@@ -59,6 +62,10 @@ describe("by count", () => {
 
     test("test tall/salt - false", () => {
         expect(isAnagramByCount("tall", "salt")).toBe(false);
+    });
+
+    test("test ceder/seeder - false", () => {
+        expect(isAnagramByCount("ceder", "seeder")).toBe(false);
     });
 
 });
