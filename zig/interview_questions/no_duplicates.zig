@@ -42,13 +42,13 @@ pub fn noDuplicates_BySorting(allocator: std.mem.Allocator, input: []const u8) !
     const buffer = try allocator.alloc(u8, input.len);
     defer allocator.free(buffer); // remember to free it!
 
-    // now sort the characters 
+    // now sort the characters
     std.mem.copyForwards(u8, buffer, input);
     std.mem.sort(u8, buffer, {}, comptime std.sort.asc(u8));
 
     var pos: usize = 0;
 
-    while (pos < buffer.len-1) : (pos += 1) {
+    while (pos < buffer.len - 1) : (pos += 1) {
         if (buffer[pos] == buffer[pos + 1]) {
             return false;
         }
@@ -109,6 +109,11 @@ test "(ByLoops) no duplicates - has a duplicate at the end" {
     try expect(!result);
 }
 
+test "(ByLoops) no duplicates - has a duplicate different case" {
+    const result = noDuplicates_ByLoops("Spog en Pronk");
+    try expect(!result);
+}
+
 // -------------------------------------------------------------------------------------- BySorting
 test "(BySorting) no duplicates - empty string" {
     const result = try noDuplicates_BySorting(test_allocator, "");
@@ -130,6 +135,11 @@ test "(BySorting) no duplicates - has a duplicate at the end" {
     try expect(!result);
 }
 
+test "(BySorting) no duplicates - has a duplicate different case" {
+    const result = try noDuplicates_BySorting(test_allocator, "Spog en Pronk");
+    try expect(!result);
+}
+
 // -------------------------------------------------------------------------------------- ByHashMap
 test "(ByHashMap) no duplicates - empty string" {
     const result = try noDuplicates_ByHashMap(test_allocator, "");
@@ -148,5 +158,10 @@ test "(ByHashMap) no duplicates - has a duplicate" {
 
 test "(ByHashMap) no duplicates - has a duplicate at the end" {
     const result = try noDuplicates_ByHashMap(test_allocator, "abcdefghABCDEFGa");
+    try expect(!result);
+}
+
+test "(ByHashMap) no duplicates - has a duplicate different case" {
+    const result = try noDuplicates_ByHashMap(test_allocator, "Spog en Pronk");
     try expect(!result);
 }
