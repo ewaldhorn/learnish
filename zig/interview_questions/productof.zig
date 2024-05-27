@@ -1,5 +1,6 @@
 const std = @import("std");
 
+// ________________________________________________________________________________________________
 // calculate the product of the array for each element, without that element
 // for example:
 // [1, 2, 3, 4] yields [24, 12, 8, 6]
@@ -27,11 +28,11 @@ fn productOfArrayExceptSelf(alloc: std.mem.Allocator, src: []const i32) ![]i32 {
     return try list.toOwnedSlice();
 }
 
-// ________________________________________________________________________________________________
 // ========================================================================================== TESTS
 const expect = std.testing.expect;
 const allocator = std.testing.allocator;
 
+// ________________________________________________________________________________________________
 test "basic array" {
     const my_array = [_]i32{ 1, 2, 3, 4 };
 
