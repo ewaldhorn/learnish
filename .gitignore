@@ -1,2 +1,4 @@
 zig/build_system/hello_zig_build/buildme/.idea
 zig/build_system/hello_zig_build/buildme/buildme.iml
+zig/raylib/zigbounce/zig-cache
+zig/raylib/zigbounce/zig-out
