@@ -2,3 +2,6 @@ zig/build_system/hello_zig_build/buildme/.idea
 zig/build_system/hello_zig_build/buildme/buildme.iml
 zig/raylib/zigbounce/zig-cache
 zig/raylib/zigbounce/zig-out
+zig/wasm/js_interop/static/wasmtest.wasm
+zig/wasm/js_interop/static/wasmtest.wasm.o
+zig/wasm/js_interop/zig-cache

@@ -1,0 +1,16 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  TARGET: wasmtest
+
+tasks:
+  default:
+    cmds:
+      - task --list-all
+    silent: true
+  build:
+    cmds:
+      - "zig build-exe src/main.zig -target wasm32-freestanding -fno-entry -rdynamic -femit-bin=static/{{.TARGET}}.wasm -O ReleaseFast"
+    silent: true
