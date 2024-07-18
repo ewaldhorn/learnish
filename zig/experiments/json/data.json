@@ -1,0 +1,17 @@
+{
+  "name": "John Smith",
+  "is_alive": true,
+  "age": 45,
+  "address": {
+    "street_address": "21 2nd Street",
+    "city": "New York",
+    "state": "NY",
+    "postal_code": "10021-3100"
+  },
+  "children_age": [
+    12,
+    8,
+    21
+  ],
+  "spouse": null
+}
