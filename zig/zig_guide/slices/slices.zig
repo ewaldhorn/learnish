@@ -25,3 +25,10 @@ test "slices 2" {
 
     try expect(@TypeOf(slice) == *const [3]u8);
 }
+
+// ------------------------------------------------------------------- slices 3
+test "slices 3" {
+    var array = [_]u8{ 1, 2, 3, 4, 5 };
+    const slice = array[0..];
+    _ = slice;
+}
