@@ -11,7 +11,7 @@ pub fn main() !void {
 
     repl_loop: while (true) {
         const line = try stdin.readUntilDelimiterOrEof(&repl, '\n');
-        var input = std.mem.trimRight(u8, line.?, "\r\n");
+        const input = std.mem.trimRight(u8, line.?, "\r\n");
         if (std.mem.eql(u8, input, "")) {
             continue;
         } else if (std.mem.eql(u8, input, "exit")) {
@@ -21,7 +21,7 @@ pub fn main() !void {
             continue;
         }
 
-        var it = std.mem.split(input, " ");
+        var it = std.mem.splitSequence(u8, input, " ");
 
         var stack = [_]f64{0} ** 256;
         var sp: usize = 0;
@@ -60,6 +60,7 @@ pub fn main() !void {
                 '#' => continue :repl_loop,
                 'M' => {
                     const index = std.fmt.parseInt(usize, tok[1..], 10) catch |err| {
+                        std.debug.print("Error: {}", .{err});
                         std.debug.print("Invalid memory memory slot index in {s}\n", .{tok});
                         continue :repl_loop;
                     };
@@ -68,6 +69,7 @@ pub fn main() !void {
                 },
                 '0'...'9', '.' => {
                     const num = std.fmt.parseFloat(f64, tok) catch |err| {
+                        std.debug.print("Error: {}", .{err});
                         std.debug.print("Invalid character in floating point number {s}\n", .{tok});
                         continue :repl_loop;
                     };
@@ -96,7 +98,7 @@ pub fn main() !void {
                             sum += val;
                         }
                         sp -= count;
-                        stack[sp] = sum / @intToFloat(f64, count);
+                        stack[sp] = sum / @as(f64, @floatFromInt(count));
                         sp += 1;
                     } else {
                         try stdout.print("Invalid operation {s}\n", .{tok});
