@@ -5,3 +5,5 @@ zig/raylib/zigbounce/zig-out
 zig/wasm/js_interop/static/wasmtest.wasm
 zig/wasm/js_interop/static/wasmtest.wasm.o
 zig/wasm/js_interop/zig-cache
+zig/learning/zig_master/builder_bob/.zig-cache
+zig/learning/zig_master/builder_bob/zig-out
