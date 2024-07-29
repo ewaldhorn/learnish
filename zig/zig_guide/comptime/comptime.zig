@@ -35,8 +35,40 @@ fn GetBiggerInt(comptime T: type) type {
     });
 }
 
+// ------------------------------------------------------------------------ Vec
+fn Vec(
+    comptime count: comptime_int,
+    comptime T: type,
+) type {
+    return struct {
+        data: [count]T,
+        const Self = @This();
+
+        fn abs(self: Self) Self {
+            var tmp = Self{ .data = undefined };
+            for (self.data, 0..) |elem, i| {
+                tmp.data[i] = if (elem < 0)
+                    -elem
+                else
+                    elem;
+            }
+            return tmp;
+        }
+
+        fn init(data: [count]T) Self {
+            return Self{ .data = data };
+        }
+    };
+}
+
+// -------------------------------------------------------------------- plusOne
+fn plusOne(x: anytype) @TypeOf(x) {
+    return x + 1;
+}
+
 // ====================================================================== TESTS
 const expect = @import("std").testing.expect;
+const eql = @import("std").mem.eql;
 
 test "comptime blocks" {
     const x = comptime fibonacci(10);
@@ -86,4 +118,31 @@ test "typeinfo switch" {
 test "@Type" {
     try expect(GetBiggerInt(u8) == u9);
     try expect(GetBiggerInt(i31) == i32);
+}
+
+test "generic vector" {
+    const x = Vec(3, f32).init([_]f32{ 10, -10, 5 });
+    const y = x.abs();
+    try expect(eql(f32, &y.data, &[_]f32{ 10, 10, 5 }));
+}
+
+test "inferred function parameter" {
+    try expect(plusOne(@as(u32, 1)) == 2);
+}
+
+test "++" {
+    const x: [4]u8 = undefined;
+    const y = x[0..];
+
+    const a: [6]u8 = undefined;
+    const b = a[0..];
+
+    const new = y ++ b;
+    try expect(new.len == 10);
+}
+
+test "**" {
+    const pattern = [_]u8{ 0xCC, 0xAA };
+    const memory = pattern ** 3;
+    try expect(eql(u8, &memory, &[_]u8{ 0xCC, 0xAA, 0xCC, 0xAA, 0xCC, 0xAA }));
 }
