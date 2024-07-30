@@ -42,6 +42,10 @@ pub fn main() void {
     displayItemsAnyLength(&scores, scores.len);
     displayItemsUsingSliceStruct(MySlice{ .pointer = &scores, .length = scores.len });
     displayItemsUsingZigSlice(&scores);
+
+    // get the first to elements of the array in a slice
+    const sliced = scores[0..2];
+    displayItemsUsingZigSlice(sliced);
 }
 
 // ====================================================================== TESTS
