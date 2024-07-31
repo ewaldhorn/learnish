@@ -1,10 +1,15 @@
 <!doctype html>
 <html>
   <head>
-    <title>Zig Javascript Bridge Demo</title>
+    <title>Zig Javascript Bouncing Lines Experiment</title>
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div id="content">
+      <canvas id="canvas" width="640px" height="480px"></canvas>
+    </div>
+
     <script src="zjb_extract.js"></script>
     <script>
       const env = {
