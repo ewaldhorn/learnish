@@ -11,6 +11,21 @@ fn getRandomGoal() !u8 {
     return rand.intRangeAtMost(u8, 1, 100);
 }
 
+// -------------------------------------------------------------- validateGuess
+fn validateGuess(guess: u8, goal: u8, out: std.fs.File.Writer) !bool {
+    var mustQuit = false;
+
+    if (guess < goal) try out.writeAll("Too Small!\n");
+    if (guess > goal) try out.writeAll("Too Big!\n");
+
+    if (guess == goal) {
+        try out.writeAll("Correct!\n");
+        mustQuit = true;
+    }
+
+    return mustQuit;
+}
+
 // ======================================================================= MAIN
 pub fn main() !void {
     const goal = try getRandomGoal();
@@ -20,6 +35,7 @@ pub fn main() !void {
 
     while (true) {
         try stdout.writeAll("Guess (1..100): ");
+
         const bare_line = try stdin.readUntilDelimiterAlloc(
             std.heap.page_allocator,
             '\n',
@@ -27,7 +43,7 @@ pub fn main() !void {
         );
         defer std.heap.page_allocator.free(bare_line);
 
-        const line = std.mem.trim(u8, bare_line, "\r");
+        const line = std.mem.trim(u8, bare_line, "\r"); // for Windows...
         const guess = std.fmt.parseInt(u8, line, 10) catch |err| switch (err) {
             error.Overflow => {
                 try stdout.writeAll("Please enter a number between 1 and 100\n");
@@ -38,11 +54,7 @@ pub fn main() !void {
                 continue;
             },
         };
-
-        if (guess < goal) try stdout.writeAll("Too Small!\n");
-        if (guess > goal) try stdout.writeAll("Too Big!\n");
-        if (guess == goal) {
-            try stdout.writeAll("Correct!\n");
+        if (try validateGuess(guess, goal, stdout) == true) {
             break;
         }
     }
@@ -51,6 +63,7 @@ pub fn main() !void {
 // ====================================================================== TESTS
 const expect = std.testing.expect;
 
+// ----------------------------------------------------------------------------
 test "random numbers are not too big or small" {
     var isOk = true;
 
