@@ -33,8 +33,10 @@ pub fn main() !void {
     const stdin = std.io.getStdIn().reader();
     const stdout = std.io.getStdOut().writer();
 
+    var guesses: usize = 0;
     while (true) {
         try stdout.writeAll("Guess (1..100): ");
+        guesses += 1;
 
         const bare_line = try stdin.readUntilDelimiterAlloc(
             std.heap.page_allocator,
@@ -58,6 +60,8 @@ pub fn main() !void {
             break;
         }
     }
+
+    std.debug.print("You got it in {d} guess{s}!\n", .{ guesses, if (guesses > 1) "es" else "" });
 }
 
 // ====================================================================== TESTS
