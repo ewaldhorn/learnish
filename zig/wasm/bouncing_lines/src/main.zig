@@ -3,15 +3,18 @@ const zig_logo_shapes = @import("zig_logo_shapes.zig").zig_logo_shapes;
 
 var canvas: zjb.Handle = undefined;
 
+const canvasWidth: f64 = 640.0;
+const canvasHeight: f64 = 480.0;
+
 // center of canvas, accounting for logo size
-const xOffset: f64 = 640.0 / 2 - 153 / 2;
-const yOffset: f64 = 480.0 / 2 - 141 / 2;
+const xOffset: f64 = canvasWidth / 2 - 153 / 2;
+const yOffset: f64 = canvasHeight / 2 - 141 / 2;
 
 // ----------------------------------------------------------------- initCanvas
 fn initCanvas() void {
     canvas = zjb.global("document").call("getElementById", .{zjb.constString("canvas")}, zjb.Handle);
-    canvas.set("width", 640);
-    canvas.set("height", 480);
+    canvas.set("width", canvasWidth);
+    canvas.set("height", canvasHeight);
 }
 
 // -------------------------------------------------------------- renderZigLogo
