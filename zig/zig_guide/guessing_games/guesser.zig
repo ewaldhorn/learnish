@@ -26,27 +26,34 @@ fn validateGuess(guess: u8, goal: u8, out: std.fs.File.Writer) !bool {
     return mustQuit;
 }
 
+// --------------------------------------------------------------- getUserGuess
+fn getUserGuess() ![]const u8 {
+    const stdin = std.io.getStdIn().reader();
+    var buf: [100]u8 = undefined;
+
+    const userInput = try stdin.readUntilDelimiterOrEof(&buf, '\n');
+
+    if (userInput) |ui| {
+        const line = std.mem.trim(u8, ui, "\r"); // for Windows...
+        return line;
+    }
+
+    return "error";
+}
+
 // ======================================================================= MAIN
 pub fn main() !void {
     const goal = try getRandomGoal();
 
-    const stdin = std.io.getStdIn().reader();
     const stdout = std.io.getStdOut().writer();
 
     var guesses: usize = 0;
     while (true) {
         try stdout.writeAll("Guess (1..100): ");
         guesses += 1;
+        const userGuess = try getUserGuess();
 
-        const bare_line = try stdin.readUntilDelimiterAlloc(
-            std.heap.page_allocator,
-            '\n',
-            8192,
-        );
-        defer std.heap.page_allocator.free(bare_line);
-
-        const line = std.mem.trim(u8, bare_line, "\r"); // for Windows...
-        const guess = std.fmt.parseInt(u8, line, 10) catch |err| switch (err) {
+        const guess = std.fmt.parseInt(u8, userGuess, 10) catch |err| switch (err) {
             error.Overflow => {
                 try stdout.writeAll("Please enter a number between 1 and 100\n");
                 continue;
