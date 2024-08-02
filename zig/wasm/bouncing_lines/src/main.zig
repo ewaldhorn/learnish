@@ -14,7 +14,7 @@ fn initCanvas() void {
     canvas.set("height", 480);
 }
 
-// ------------------------------- renderZigLogo
+// -------------------------------------------------------------- renderZigLogo
 fn renderZigLogo(context: zjb.Handle) void {
     context.set("fillStyle", zjb.constString("#F7A41D"));
 
