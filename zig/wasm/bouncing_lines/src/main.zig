@@ -1,14 +1,20 @@
 const zjb = @import("zjb");
 
+var canvas: zjb.Handle = undefined;
+
+// ----------------------------------------------------------------- initCanvas
+fn initCanvas() void {
+    canvas = zjb.global("document").call("getElementById", .{zjb.constString("canvas")}, zjb.Handle);
+    canvas.set("width", 640);
+    canvas.set("height", 480);
+}
+// ======================================================================= MAIN
 export fn main() void {
     zjb.global("console").call("log", .{zjb.constString("Hello from Zig")}, void);
 
     {
-        const canvas = zjb.global("document").call("getElementById", .{zjb.constString("canvas")}, zjb.Handle);
+        initCanvas();
         defer canvas.release();
-
-        canvas.set("width", 640);
-        canvas.set("height", 480);
 
         const context = canvas.call("getContext", .{zjb.constString("2d")}, zjb.Handle);
         defer context.release();
