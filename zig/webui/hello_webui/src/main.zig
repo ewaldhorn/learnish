@@ -10,7 +10,9 @@ pub fn main() !void {
 
     if (didDisplay) {
         webui.wait();
-    } else {}
+    } else {
+        std.debug.print("Failed to open browser.", .{});
+    }
 
     std.debug.print("End of run.\n", .{});
 }
