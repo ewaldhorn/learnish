@@ -35,6 +35,17 @@ fn add_random_values() void {
 }
 
 // ----------------------------------------------------------------------------
+fn loop_through_array() void {
+    print("The array items are: ", .{});
+
+    for (myArray) |it| {
+        print("{d}, ", .{it});
+    }
+
+    newline();
+}
+
+// ----------------------------------------------------------------------------
 pub fn array_fun() void {
     print("Array length is: {}\n", .{myArray.len});
     display_array();
@@ -42,4 +53,5 @@ pub fn array_fun() void {
     display_array();
     add_random_values();
     display_array();
+    loop_through_array();
 }
