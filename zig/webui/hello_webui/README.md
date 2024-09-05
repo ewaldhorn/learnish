@@ -9,3 +9,8 @@ Zig, that should be it.
 ## Makefile
 
 For your convenience, there's a `make` file to simplify things a bit.
+
+Options:
+- `run` Runs the application
+- `clean` Cleans the 'zig-out' directory
+- `build` Builds a binary for the current OS
