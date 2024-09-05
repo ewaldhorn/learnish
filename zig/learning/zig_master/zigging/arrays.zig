@@ -19,6 +19,12 @@ fn display_array() void {
 }
 
 // ----------------------------------------------------------------------------
+fn populate_with_destructuring() void {
+    print("Populating the array with destructuring.\n", .{});
+    myArray[1], myArray[3], myArray[5], myArray[7], myArray[9] = .{ 2, 4, 6, 8, 10 };
+}
+
+// ----------------------------------------------------------------------------
 fn add_random_values() void {
     print("Randomising array.\n", .{});
     var rand_impl = std.rand.DefaultPrng.init(42);
@@ -31,6 +37,8 @@ fn add_random_values() void {
 // ----------------------------------------------------------------------------
 pub fn array_fun() void {
     print("Array length is: {}\n", .{myArray.len});
+    display_array();
+    populate_with_destructuring();
     display_array();
     add_random_values();
     display_array();
