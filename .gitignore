@@ -13,3 +13,4 @@ zig/zig_guide/file_system/junk_file.txt
 zig/zig_guide/file_system/junk_file2.txt
 zig/webui/hello_webui/.zig-cache
 zig/webui/hello_webui/zig-out
+zig/experiments/sqlite/hellolite/hellolite.db
