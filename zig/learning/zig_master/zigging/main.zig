@@ -1,19 +1,43 @@
 const std = @import("std");
 const print = std.debug.print;
+
 // ----------------------------------------------------------------------------
 fn newline() void {
     print("\n", .{});
 }
+
+// ----------------------------------------------------------------------------
+fn space() void {
+    print(" ", .{});
+}
 // ----------------------------------------------------------------------------
 fn print_evens(max: u8) void {
-    const start: u8 = 2;
+    const start: u8 = 1;
     print("Even numbers from {} to {} are:\n", .{ start, max });
+    for (start..max + 1) |n| {
+        if (n % 2 == 0) {
+            print("{}", .{n});
+            if (n < max) {
+                space();
+            }
+        }
+    }
+    newline();
 }
 
 // ----------------------------------------------------------------------------
 fn print_odds(max: u8) void {
-    const start: u8 = 2;
+    const start: u8 = 1;
     print("Odd numbers from {} to {} are:\n", .{ start, max });
+    for (start..max + 1) |n| {
+        if (n % 2 != 0) {
+            print("{}", .{n});
+            if (n < max) {
+                space();
+            }
+        }
+    }
+    newline();
 }
 
 // ----------------------------------------------------------------------------
