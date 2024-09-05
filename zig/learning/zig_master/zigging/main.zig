@@ -5,6 +5,8 @@ const comma = @import("terminal_utils.zig").comma;
 const space = @import("terminal_utils.zig").space;
 const newline = @import("terminal_utils.zig").newline;
 
+const arrayfun = @import("arrays.zig").array_fun;
+
 // ----------------------------------------------------------------------------
 fn print_evens(max: u8) void {
     const start: u8 = 1;
@@ -64,6 +66,8 @@ pub fn main() !void {
     print_odds(max);
     newline();
     print_spaced(max);
+    newline();
+    arrayfun();
 }
 
 // ====================================================================== TESTS
