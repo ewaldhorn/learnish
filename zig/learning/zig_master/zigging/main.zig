@@ -10,6 +10,12 @@ fn newline() void {
 fn space() void {
     print(" ", .{});
 }
+
+// ----------------------------------------------------------------------------
+fn comma() void {
+    print(", ", .{});
+}
+
 // ----------------------------------------------------------------------------
 fn print_evens(max: u8) void {
     const start: u8 = 1;
@@ -41,6 +47,21 @@ fn print_odds(max: u8) void {
 }
 
 // ----------------------------------------------------------------------------
+fn print_spaced(max: u8) void {
+    var position: u8 = 1;
+
+    print("Numbers from {} to {} are:\n", .{ position, max });
+
+    while (position <= max) : (position += 1) {
+        print("{}", .{position});
+        if (position < max) {
+            comma();
+        }
+    }
+    newline();
+}
+
+// ----------------------------------------------------------------------------
 fn sumOf(left: u16, right: u16) u32 {
     return left + right;
 }
@@ -52,11 +73,14 @@ pub fn main() !void {
     print_evens(max);
     newline();
     print_odds(max);
+    newline();
+    print_spaced(max);
 }
 
 // ====================================================================== TESTS
 const assert = std.debug.assert;
 
+// ----------------------------------------------------------------------------
 test "sum_of 8 and 8" {
     const left: u8 = 8;
     const right: u8 = 8;
