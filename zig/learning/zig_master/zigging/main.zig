@@ -1,20 +1,9 @@
 const std = @import("std");
 const print = std.debug.print;
 
-// ----------------------------------------------------------------------------
-fn newline() void {
-    print("\n", .{});
-}
-
-// ----------------------------------------------------------------------------
-fn space() void {
-    print(" ", .{});
-}
-
-// ----------------------------------------------------------------------------
-fn comma() void {
-    print(", ", .{});
-}
+const comma = @import("terminal_utils.zig").comma;
+const space = @import("terminal_utils.zig").space;
+const newline = @import("terminal_utils.zig").newline;
 
 // ----------------------------------------------------------------------------
 fn print_evens(max: u8) void {
