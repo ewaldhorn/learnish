@@ -47,9 +47,21 @@ pub fn main() !void {
 const assert = std.debug.assert;
 const test_allocator = std.testing.allocator;
 
+// ----------------------------------------------------------------------------
 test "repeater" {
     const original = "ABC";
     const reps: usize = 4;
+
+    const result = try repeat(test_allocator, original, reps);
+    defer test_allocator.free(result);
+
+    assert(result.len == (original.len * reps));
+}
+
+// ----------------------------------------------------------------------------
+test "repeated repeater" {
+    const original = "This is a longer string of words.";
+    const reps: usize = 12;
 
     const result = try repeat(test_allocator, original, reps);
     defer test_allocator.free(result);
