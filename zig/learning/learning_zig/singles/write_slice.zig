@@ -2,7 +2,7 @@ const std = @import("std");
 
 pub fn main() void {
     var a = [_]i32{ 1, 2, 3, 4, 5 };
-    var end: usize = 4;
+    const end: usize = 4;
     const b = a[1..end];
     b[2] = 99;
 
