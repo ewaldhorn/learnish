@@ -56,6 +56,17 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    // Check for the 'test-coverage' flag, if set, also run test coverage
+    const coverage = b.option(bool, "test-coverage", "Generate test coverage") orelse false;
+    if (coverage) {
+        exe_unit_tests.setExecCmd(&[_]?[]const u8{
+            "kcov",
+            //"--path-strip-level=3", // any kcov flags can be specified here
+            "kcov-output", // output dir for kcov
+            null, // to get zig to use the --test-cmd-bin flag
+        });
+    }
+
     const run_exe_unit_tests = b.addRunArtifact(exe_unit_tests);
 
     // Similar to creating the run step earlier, this exposes a `test` step to
