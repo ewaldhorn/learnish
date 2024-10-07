@@ -23,6 +23,7 @@ pub fn main() !void {
 
     account.balance += 1.0;
     std.debug.print("Adding R1.00 results in a balance of R{d}\n", .{account.balance});
+    account.Report();
 }
 
 test "simple test" {
