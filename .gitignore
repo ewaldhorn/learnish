@@ -8,3 +8,5 @@ zig/experiments/sqlite/hellolite/hellolite.db
 zig-cache
 .zig-cache
 zig-out
+zig/experiments/wasm/checkerboard_raw/static/checkerboard.wasm
+zig/experiments/wasm/checkerboard_raw/static/checkerboard.wasm.o
