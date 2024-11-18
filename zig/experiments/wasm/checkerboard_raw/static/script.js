@@ -60,5 +60,5 @@ WebAssembly.instantiateStreaming(
   console.log(memory.buffer);
   setInterval(() => {
     drawCheckerboard();
-  }, 250);
+  }, 1000);
 });
