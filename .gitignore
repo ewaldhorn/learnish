@@ -12,3 +12,5 @@ zig/experiments/wasm/checkerboard_raw/static/checkerboard.wasm
 zig/experiments/wasm/checkerboard_raw/static/checkerboard.wasm.o
 zig/wasm/hello_wasm/site/module.wasm
 zig/wasm/hello_wasm/site/module.wasm.o
+zig/wasm/dom/site/module.wasm
+zig/wasm/dom/site
