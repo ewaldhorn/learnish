@@ -1,7 +1,5 @@
-const std = @import("std");
+extern fn print(i32) void;
 
-pub fn main() !void {
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("content-type: text/plain\n\n", .{});
-    try stdout.print("Hello, World!\n", .{});
+export fn add(a: i32, b: i32) void {
+    print(a + b);
 }
