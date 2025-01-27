@@ -1,1 +1,1 @@
-zig build-lib calc.zig -dynamic
+zig build-lib -fPIC -dynamic -O ReleaseSafe  calc.zig

@@ -16,3 +16,4 @@ zig/wasm/dom/site/module.wasm
 zig/wasm/dom/site
 zig/with_python/python_pi/zig/libcalc.dylib
 zig/with_python/python_pi/zig/libcalc.dylib.o
+zig/with_python/python_pi/py_calc/__pycache__
